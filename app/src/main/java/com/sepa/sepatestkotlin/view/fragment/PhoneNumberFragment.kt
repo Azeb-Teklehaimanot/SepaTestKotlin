@@ -1,5 +1,6 @@
 package com.sepa.sepatestkotlin.view.fragment
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,7 @@ class PhoneNumberFragment : Fragment() {
                 binding.inputEdtTextPhone.error = getString(R.string.invalid_phone)
             }
         }
+        binding.login.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         binding.cpp.setOnCountryChangeListener {
             val countryCode = binding.cpp.selectedCountryCode

@@ -2,6 +2,7 @@ package com.sepa.sepatestkotlin.view.fragment
 
 import com.sepa.sepatestkotlin.service.SmsBroadcastReceiver
 import android.content.IntentFilter
+import android.graphics.Paint
 import android.os.Bundle
 import android.provider.Telephony
 import android.view.LayoutInflater
@@ -40,6 +41,8 @@ class OtpFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.otpViewModel = otpViewModel
         binding.phoneViewModel = phoneNumberViewModel
+        binding.login.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+
         // Listen for SMS broadcasts and update the OTP code in the view model
         smsBroadcastReceiver = SmsBroadcastReceiver { otpCode ->
             otpViewModel.otpCode.postValue(otpCode)
