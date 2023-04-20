@@ -9,57 +9,38 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.sepa.sepatestkotlin.R
 import com.sepa.sepatestkotlin.view.fragment.PhoneNumberFragment
+import android.provider.Telephony
+
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+
 
 class MainActivity : AppCompatActivity() {
 
-    private val REQUEST_SMS_PERMISSION = 123
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        // check if the permission has been granted
-        if (ContextCompat.checkSelfPermission(this, RECEIVE_SMS)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            // request the permission
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(RECEIVE_SMS),
-                REQUEST_SMS_PERMISSION
-            )
-        }
-
-        if (savedInstanceState == null) {
-            navigateToPhoneNumberFragment()
-        }
+        navigateToPhoneNumberFragment()
     }
 
-    // handle the result of the permission request
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            REQUEST_SMS_PERMISSION -> {
-                // if the permission is granted
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                  navigateToPhoneNumberFragment()
-                } else {
-                    // if the permission is not granted, show a message to the user
-                    Toast.makeText(this, "SMS permission denied", Toast.LENGTH_SHORT).show()
-                }
-                return
-            }
-            else -> {
-                // handle other permission requests
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        navigateToPhoneNumberFragment()
     }
 
-    fun navigateToPhoneNumberFragment(){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, PhoneNumberFragment.newInstance())
-            .commitNow()
+    fun navigateToPhoneNumberFragment() {
+        if (packageName != Telephony.Sms.getDefaultSmsPackage(this)) {
+            // Ask the user to make this app the default SMS app
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri = Uri.fromParts("package", packageName, null)
+            intent.data = uri
+            startActivity(intent)
+        } else {
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, PhoneNumberFragment.newInstance())
+                .commitNow()
+        }
     }
 }
