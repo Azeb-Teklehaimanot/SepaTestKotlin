@@ -1,12 +1,7 @@
 package com.sepa.sepatestkotlin.view.activity
 
-import android.Manifest.permission.RECEIVE_SMS
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.sepa.sepatestkotlin.R
 import com.sepa.sepatestkotlin.view.fragment.PhoneNumberFragment
 import android.provider.Telephony
