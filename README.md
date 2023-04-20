@@ -1,5 +1,7 @@
 # SepaTestKotlin
 Question  _____ can sms reading be done without asking for permission?
+
+
 Answer    _____ implemented on branch NonPermission
 
 Reading SMS messages without requesting permission is only possible if an app is set as the default SMS app on the device, and has declared the SMS_DELIVER intent filter in your app's manifest file. If these conditions are met, it read SMS messages without requesting permission.
